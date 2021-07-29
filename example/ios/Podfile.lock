@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - motionphoto (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - motionphoto (from `.symlinks/plugins/motionphoto/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  motionphoto:
+    :path: ".symlinks/plugins/motionphoto/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  motionphoto: 8a39672fd6381c24dda0fed40be0a01b7de1ac55
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.1
