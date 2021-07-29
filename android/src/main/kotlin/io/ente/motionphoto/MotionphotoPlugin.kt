@@ -17,7 +17,7 @@ class MotionphotoPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "motionphoto")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "io.ente/motionphoto")
     channel.setMethodCallHandler(this)
   }
 

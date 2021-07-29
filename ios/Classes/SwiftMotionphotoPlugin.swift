@@ -3,7 +3,7 @@ import UIKit
 
 public class SwiftMotionphotoPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "motionphoto", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "io.ente/motionphoto", binaryMessenger: registrar.messenger())
     let instance = SwiftMotionphotoPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
