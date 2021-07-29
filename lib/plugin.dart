@@ -11,8 +11,8 @@ class Plugin with BasePlugin {
 
   Plugin._();
 
-  Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
+  Future<String> get platformVersion async {
+    final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
@@ -26,14 +26,14 @@ class Plugin with BasePlugin {
     return await _channel.invokeMethod('mediaSubTypes', params);
   }
 
-  Future<String?> getLivePhotoFile(String id) async {
+  Future<String> getLivePhotoFile(String id) async {
     if (Platform.isAndroid) {
       return Future.value(null);
     }
     final params = {
       'id': id,
     };
-    return _channel.invokeMethod('getLivePhotoUrl', params);
+    return  await _channel.invokeMethod('getLivePhotoUrl', params);
   }
 }
 

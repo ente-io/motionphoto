@@ -35,7 +35,6 @@ public class SwiftMotionphotoPlugin: NSObject, FlutterPlugin {
                     fetchLivePhotoUrl(asset: assetsFound[0]) { [weak self] (url, err) in
                         guard let _ = self else { result(nil); return }
                         if (url != nil) {
-                            print(url?.path)
                             result(url?.path)
                         } else {
                             result(nil)
@@ -66,7 +65,6 @@ public class SwiftMotionphotoPlugin: NSObject, FlutterPlugin {
         guard let asset = asset else { onCompletion(nil,nil); return}
         let resources = PHAssetResource.assetResources(for: asset)
         for resource in resources {
-            print(resource.originalFilename)
             if resource.type == .video || resource.type == .pairedVideo {
                 let url = FileManager.default.temporaryDirectory.appendingPathComponent(resource.originalFilename)
                 try? FileManager.default.removeItem(atPath: url.path)
