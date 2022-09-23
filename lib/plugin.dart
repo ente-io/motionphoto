@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 class Plugin with BasePlugin {
@@ -26,14 +24,14 @@ class Plugin with BasePlugin {
     return await _channel.invokeMethod('mediaSubTypes', params);
   }
 
-  Future<String> getLivePhotoFile(String id) async {
+  Future<String?> getLivePhotoFile(String id) async {
     if (Platform.isAndroid) {
       return Future.value(null);
     }
     final params = {
       'id': id,
     };
-    return  await _channel.invokeMethod('getLivePhotoUrl', params);
+    return await _channel.invokeMethod('getLivePhotoUrl', params);
   }
 }
 

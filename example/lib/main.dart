@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     // We also handle the message potentially returning null.
     try {
       print(_id);
-      platformVersion = (await Motionphoto.getLivePhotoFile(_id)).path;
+      platformVersion = (await Motionphoto.getLivePhotoFile(_id))!.path;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
