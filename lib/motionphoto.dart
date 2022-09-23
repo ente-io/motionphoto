@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'plugin.dart';
@@ -22,7 +21,7 @@ class Motionphoto {
     return (mediaType & 8) != 0;
   }
 
-  static Future<File> getLivePhotoFile(String id) async {
+  static Future<File?> getLivePhotoFile(String id) async {
     final path = await _plugin.getLivePhotoFile(id);
     if (null == path) {
       print("no live photo!! for " + id);
