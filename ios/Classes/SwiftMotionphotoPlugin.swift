@@ -55,7 +55,12 @@ public class SwiftMotionphotoPlugin: NSObject, FlutterPlugin {
                                                   contentMode: .default,
                                                   options: option) { [weak self] (livePhoto, info) in
             guard let self = self else { completionHandler(nil, nil); return }
-            self.handleLivePhoto(asset: livePhoto, info: info, onCompletion: completionHandler)
+            if livePhoto == nil {
+                // On a ultra rare occasion `livePhoto` may be `nil`. In this case we should fallback to getting data directly from `PHAsset`
+                self.handleAsset(asset, info: info, onCompletion: completionHandler)
+            } else {
+                self.handleLivePhoto(asset: livePhoto, info: info, onCompletion: completionHandler)
+            }
         }
     }
 
@@ -64,11 +69,26 @@ public class SwiftMotionphotoPlugin: NSObject, FlutterPlugin {
                                  onCompletion: @escaping (URL?, Error?) -> Void) {
         guard let asset = asset else { onCompletion(nil,nil); return}
         let resources = PHAssetResource.assetResources(for: asset)
+        handleWritingData(resources: resources, info: info, onCompletion: onCompletion)
+    }
+
+    private func handleAsset(_ asset: PHAsset,
+                             info: [AnyHashable: Any]?,
+                             onCompletion: @escaping (URL?, Error?) -> Void) {
+        let resources = PHAssetResource.assetResources(for: asset)
+        handleWritingData(resources: resources, info: info, onCompletion: onCompletion)
+    }
+
+    private func handleWritingData(resources: [PHAssetResource],
+                                   info: [AnyHashable: Any]?,
+                                   onCompletion: @escaping (URL?, Error?) -> Void) {
         for resource in resources {
             if resource.type == .video || resource.type == .pairedVideo {
                 let url = FileManager.default.temporaryDirectory.appendingPathComponent(resource.originalFilename)
                 try? FileManager.default.removeItem(atPath: url.path)
-                PHAssetResourceManager.default().writeData(for: resource, toFile: url, options: nil) { [weak self] (error) in
+                let options = PHAssetResourceRequestOptions()
+                options.isNetworkAccessAllowed = true
+                PHAssetResourceManager.default().writeData(for: resource, toFile: url, options: options) { [weak self] (error) in
                     guard let _ = self else { onCompletion(nil, nil); return }
                     if (error != nil) {
                         onCompletion(nil, error)
